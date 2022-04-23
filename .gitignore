@@ -25,3 +25,7 @@ hs_err_pid*
 # IntelliJ
 *.iml
 **/.idea
+
+# don't commit the output file
+!src/ClassSquasher.java
+src/*
