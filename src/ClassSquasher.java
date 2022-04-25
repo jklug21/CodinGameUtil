@@ -13,7 +13,7 @@ public class ClassSquasher {
     public static final String SOURCE_FOLDER = "../CodinGameSpringChallenge2022/target/generated-sources/delombok";
     public static final String MAIN_CLASS = "Player.java";
     public static final String PACKAGE_ROOT = "spring2022";
-    public static final String IMPORT_REGEX = "import\\s+[\\w.]+;";
+    public static final String IMPORT_REGEX = "import\\s+[\\w.?]+\\*?;";
 
     public static void main(String[] args) throws IOException {
         String main = MAIN_CLASS;
