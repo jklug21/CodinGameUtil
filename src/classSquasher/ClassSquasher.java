@@ -1,3 +1,5 @@
+package classSquasher;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,10 +11,38 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Squashes all your classes into one for use in the codingame platform.<br>
+ * Change the values of <code>SOURCE_FOLDER</code> and <code>PACKAGE_ROOT</code> according to your main project<br>
+ * <br>
+ * Lombok is not supported (by codingame), but you can use the delombok plugin:
+ * <pre>{@code
+ *   <plugin>
+ *     <groupId>org.projectlombok</groupId>
+ *     <artifactId>lombok-maven-plugin</artifactId>
+ *     <version>1.18.20.0</version>
+ *     <executions>
+ *       <execution>
+ *         <phase>generate-sources</phase>
+ *         <goals>
+ *           <goal>delombok</goal>
+ *         </goals>
+ *         <configuration>
+ *           <encoding>UTF-8</encoding>
+ *           <sourceDirectory>src/main/java</sourceDirectory>
+ *         </configuration>
+ *       </execution>
+ *     </executions>
+ *   </plugin>
+ * }</pre>
+ * to work around that issue.<br>
+ * <br>
+ * Doesn't support newer modifiers like 'sealed'. (untested, maybe it does work)
+ */
 public class ClassSquasher {
     public static final String SOURCE_FOLDER = "../CodinGameSpringChallenge2022/target/generated-sources/delombok";
-    public static final String MAIN_CLASS = "Player.java";
     public static final String PACKAGE_ROOT = "spring2022";
+    public static final String MAIN_CLASS = "Player.java";
     public static final String IMPORT_REGEX = "import\\s+[\\w.?]+\\*?;";
 
     public static void main(String[] args) throws IOException {
@@ -78,7 +108,7 @@ public class ClassSquasher {
     }
 
     private static String mutateClassDeclaration(String line) {
-        if (line.matches("^(public\\s+)?((abstract +)?class|interface|enum)\\s+\\w+\\s*((extends|implements)\\s+\\w+\\s*)?\\{\\s*$")) {
+        if (line.matches("^(public\\s+)?((abstract +)?class|interface|enum)\\s+[\\w]+(<[A-Za-z ,]+>)?\\s*((extends|implements)\\s+\\w+\\s*)?\\{\\s*$")) {
             return "static " + line.replaceAll("public\\s?", "");
         } else {
             return line;

@@ -27,5 +27,4 @@ hs_err_pid*
 **/.idea
 
 # don't commit the output file
-!src/ClassSquasher.java
-src/*
+src/Player.java
